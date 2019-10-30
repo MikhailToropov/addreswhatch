@@ -23,20 +23,24 @@ def sender(cntr, ip):
 
 def reader():
     try:
-        page = urlopen('http://whereismyip.org').read().strip()
+        page = urlopen('http://whereismyip.org').read().strip().decode()
         return page
     except:
         return None
-    
+
 def whatcher(arg):
     while arg > 1:
         s = reader()
         sender(arg, s)
         new_arg = arg /2
         with open("run.cnt", 'w') as f:
-            f.writeline(arg)
-        
-    
+            f.write(str(arg))
+        sleep(arg)
+        if new_arg > 1:
+            arg=new_arg
+        else:
+            arg=2
+
 if __name__=="__main__":
     print("Addres whatcer has started")
     try:
@@ -49,4 +53,3 @@ if __name__=="__main__":
             f.close()
             cnt = 654321
     whatcher(cnt)
-    
